@@ -1,5 +1,5 @@
 name: Python Format CI
-run-name: Running CI pipeline for ${{ github.actor }}
+run-name: Checking python's code formatting for ${{ github.actor }}
 
 on:
   push:
