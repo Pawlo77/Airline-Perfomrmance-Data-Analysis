@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils.load_data &mdash; Airline Perfomrmance Data Analysis  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Airline Perfomrmance Data Analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Airline Perfomrmance Data Analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">utils.load_data</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for utils.load_data</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="kn">import</span> <span class="n">ZipFile</span>
+
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.chrome.service</span> <span class="kn">import</span> <span class="n">Service</span> <span class="k">as</span> <span class="n">ChromeService</span>
+<span class="kn">from</span> <span class="nn">webdriver_manager.chrome</span> <span class="kn">import</span> <span class="n">ChromeDriverManager</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.ui</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support</span> <span class="kn">import</span> <span class="n">expected_conditions</span> <span class="k">as</span> <span class="n">EC</span>
+<span class="kn">from</span> <span class="nn">selenium.common.exceptions</span> <span class="kn">import</span> <span class="n">TimeoutException</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.remote.webelement</span> <span class="kn">import</span> <span class="n">WebElement</span>
+
+
+<span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/HG7NV7#&quot;</span>
+<span class="n">ROOT_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">DATASETS_FOLDER</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ROOT_DIR</span><span class="p">,</span> <span class="s2">&quot;datasets&quot;</span><span class="p">)</span>
+<span class="n">ALLOWED_DELAY</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">TIME_DELTA</span> <span class="o">=</span> <span class="mf">0.25</span>
+
+
+<div class="viewcode-block" id="CustomTimeoutException"><a class="viewcode-back" href="../../utils.html#utils.load_data.CustomTimeoutException">[docs]</a><span class="k">class</span> <span class="nc">CustomTimeoutException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom timeout exception for Selenium WebDriver&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Unable to download the data&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_element"><a class="viewcode-back" href="../../utils.html#utils.load_data.get_element">[docs]</a><span class="k">def</span> <span class="nf">get_element</span><span class="p">(</span>
+    <span class="n">driver</span><span class="p">:</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">,</span> <span class="n">xpath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">ALLOWED_DELAY</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WebElement</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Waits up to timeout seconds for the element pointed by xpath to to appear on site.</span>
+
+<span class="sd">    :param driver: a driver with loaded page</span>
+<span class="sd">    :param xpath: an element&#39;s xpath on page</span>
+<span class="sd">    :param timeout: the number of seconds to wait unitl raising an error</span>
+<span class="sd">    :raises: CustomTimeoutException</span>
+<span class="sd">    :returns: Desired Element</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">el</span> <span class="o">=</span> <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span><span class="o">.</span><span class="n">until</span><span class="p">(</span>
+            <span class="n">EC</span><span class="o">.</span><span class="n">presence_of_element_located</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">By</span><span class="o">.</span><span class="n">XPATH</span><span class="p">,</span>
+                    <span class="n">xpath</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="n">TimeoutException</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">CustomTimeoutException</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">el</span></div>
+
+
+<div class="viewcode-block" id="downloaded"><a class="viewcode-back" href="../../utils.html#utils.load_data.downloaded">[docs]</a><span class="k">def</span> <span class="nf">downloaded</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Waits until file is downloaded. It has to be the only one in the dir</span>
+
+<span class="sd">    :param dir: the directory into which some file is being downloaded</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;crdownload&quot;</span></div>
+
+
+<div class="viewcode-block" id="prepare_data"><a class="viewcode-back" href="../../utils.html#utils.load_data.prepare_data">[docs]</a><span class="k">def</span> <span class="nf">prepare_data</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads and extracts data. It assumes 3 possible situations:</span>
+<span class="sd">    - dir is empty, so it downloads and extracts data on its own,</span>
+<span class="sd">    - dir contains only a zip archive, so it extracts it on its own,</span>
+<span class="sd">    - dir contains both a zip archive and its extracted data, it does nothing.</span>
+
+<span class="sd">    ..warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.</span>
+
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># if data is not downloaded onto local machine</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="nb">dir</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Dataset not found, downloading now...&quot;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+
+        <span class="n">options</span> <span class="o">=</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">ChromeOptions</span><span class="p">()</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--start-maximized&quot;</span><span class="p">)</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--headless=new&quot;</span><span class="p">)</span>
+        <span class="n">prefs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;download.default_directory&quot;</span><span class="p">:</span> <span class="nb">dir</span><span class="p">}</span>
+        <span class="n">options</span><span class="o">.</span><span class="n">add_experimental_option</span><span class="p">(</span><span class="s2">&quot;prefs&quot;</span><span class="p">,</span> <span class="n">prefs</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">webdriver</span><span class="o">.</span><span class="n">Chrome</span><span class="p">(</span>
+            <span class="n">service</span><span class="o">=</span><span class="n">ChromeService</span><span class="p">(</span><span class="n">ChromeDriverManager</span><span class="p">()</span><span class="o">.</span><span class="n">install</span><span class="p">()),</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">driver</span><span class="p">:</span>
+            <span class="n">driver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+            <span class="n">accessBtn</span> <span class="o">=</span> <span class="n">get_element</span><span class="p">(</span>
+                <span class="n">driver</span><span class="p">,</span>
+                <span class="s2">&quot;//button[@class=&#39;btn btn-primary btn-access-dataset dropdown-toggle&#39;]&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">accessBtn</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+            <span class="n">downloadBtn</span> <span class="o">=</span> <span class="n">get_element</span><span class="p">(</span>
+                <span class="n">driver</span><span class="p">,</span> <span class="s2">&quot;//a[@class=&#39;ui-commandlink ui-widget btn-download&#39;]&quot;</span>
+            <span class="p">)</span>
+            <span class="n">downloadBtn</span><span class="o">.</span><span class="n">click</span><span class="p">()</span>
+
+            <span class="c1"># wait for download to start and finish</span>
+            <span class="c1"># if waiting for start exceeds timeout raise exception</span>
+            <span class="c1"># if for last 4 TIME_DELTA seconds file_size is the same, raise exception</span>
+            <span class="n">waiting_to_start</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">last_sizes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">not_started</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="k">while</span> <span class="n">not_started</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">downloaded</span><span class="p">():</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">TIME_DELTA</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">not_started</span><span class="p">():</span>
+                    <span class="n">waiting_to_start</span> <span class="o">+=</span> <span class="n">TIME_DELTA</span>
+                    <span class="c1"># waiting for download to start takes usually longer</span>
+                    <span class="k">if</span> <span class="n">waiting_to_start</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">ALLOWED_DELAY</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="n">CustomTimeoutException</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+                    <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">last_sizes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                        <span class="n">last_sizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_size</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">last_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">file_size</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">CustomTimeoutException</span>
+                        <span class="n">last_sizes</span> <span class="o">=</span> <span class="n">last_sizes</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="p">[</span><span class="n">file_size</span><span class="p">]</span>
+
+    <span class="c1"># if data is still only a zip archive</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">zip_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_flights"><a class="viewcode-back" href="../../utils.html#utils.load_data.load_flights">[docs]</a><span class="k">def</span> <span class="nf">load_flights</span><span class="p">(</span><span class="n">years</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span> <span class="o">=</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads flight data into memory</span>
+
+<span class="sd">    :param years: &quot;all&quot; or all possible data, List of str from {&quot;1987&quot;, ..., &quot;2008&quot;} for specific ones</span>
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    :returns: DataFrame with loaded data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">prepare_data</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">years</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Must have at least one year specified&quot;</span>
+
+    <span class="k">if</span> <span class="n">years</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.csv.bz2&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">years</span> <span class="ow">and</span> <span class="n">file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.csv.bz2&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+
+    <span class="c1"># flights = None</span>
+    <span class="c1"># for file in files:</span>
+    <span class="c1">#     flight = pd.read_csv(file, compression=&quot;bz2&quot;)</span>
+    <span class="c1">#     if flights is None:</span>
+    <span class="c1">#         flights = flight</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         flights = pd.concat([flights, flight], ignore_index=True)</span>
+    <span class="n">flights</span> <span class="o">=</span> <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;bz2&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">flights</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_csv"><a class="viewcode-back" href="../../utils.html#utils.load_data.load_csv">[docs]</a><span class="k">def</span> <span class="nf">load_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Utility function that loads a CSV file into a pd.DataFrame</span>
+
+<span class="sd">    :param str filename: file name</span>
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    :returns: DataFrame with loaded data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="load_airports"><a class="viewcode-back" href="../../utils.html#utils.load_data.load_airports">[docs]</a><span class="k">def</span> <span class="nf">load_airports</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads airports from airports.csv</span>
+
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    :returns: DataFrame with loaded data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_csv</span><span class="p">(</span><span class="s2">&quot;airports.csv&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_carriers"><a class="viewcode-back" href="../../utils.html#utils.load_data.load_carriers">[docs]</a><span class="k">def</span> <span class="nf">load_carriers</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads carriers data from carriers.csv</span>
+
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    :returns: DataFrame with loaded data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_csv</span><span class="p">(</span><span class="s2">&quot;carriers.csv&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_plane_data"><a class="viewcode-back" href="../../utils.html#utils.load_data.load_plane_data">[docs]</a><span class="k">def</span> <span class="nf">load_plane_data</span><span class="p">(</span><span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DATASETS_FOLDER</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads plane data from plane-data.csv</span>
+
+<span class="sd">    :param dir: target data directory</span>
+<span class="sd">    :returns: DataFrame with loaded data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">load_csv</span><span class="p">(</span><span class="s2">&quot;plane-data.csv&quot;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">prepare_data</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Paweł Pozorski, Igor Kołodziej, Nazarii Bihniak.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
