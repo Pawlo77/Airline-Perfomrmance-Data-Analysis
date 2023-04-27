@@ -72,6 +72,8 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
     - dir contains only a zip archive, so it extracts it on its own,
     - dir contains both a zip archive and its extracted data, it does nothing.
 
+    ..warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.
+
     :param dir: target data directory
     """
 
