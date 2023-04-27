@@ -46,13 +46,10 @@ jobs:
 
       - name: Forcepush changes
         run: |
-          git branch pythonCI
-          git checkout pythonCI
           git add -A
           git config --local user.email " ${{ github.actor }}@github.com"
           git config --local user.name ${{ github.actor }}
-          git commit -m "DeployedPython (${{ github.actor }}))"
-          git merge --force origin master
+          git commit -m "DeployedPython (${{ github.actor })"
           git push -u origin master
 
       - name: Run ghp-import
