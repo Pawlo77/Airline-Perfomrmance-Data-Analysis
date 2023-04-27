@@ -2,7 +2,8 @@
 .DS_Store
 
 # sphinx autodoc
-/docs/source/^(?!.*(index)).rst$
+*.rst
+!index.rst
 
 # testing env
 bin*
