@@ -1,5 +1,5 @@
-name: Python Code Auto-Documentation CI
-run-name: Generating documentation for ${{ github.actor }}
+name: Python CI
+run-name: Performing steps for deploying python code for ${{ github.actor }}
 
 on:
   push:
@@ -17,11 +17,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
 
-      - name: Prepare and Install dependencies
+      - name: Prepare and Install black and pipreqsnb
         run: |
           python -m pip install --upgrade pip
+          pip install black black[jupyter] pipreqsnb
+
+      - name: Format code with black
+        run: |
+          black .
+
+      - name: Create requirements.txt
+        run: |
+          pipreqsnb --force .
+
+      - name: Prepare and Install dependencies
+        run: |
           pip install -r requirements.txt
-          pip install sphinx sphinx-rtd-theme
 
       - name: Make the Sphinx docs
         run: |
@@ -29,20 +40,10 @@ jobs:
           make -C docs clean
           make -C docs html
 
-      - name: Init new repo in dist folder and commit generated files
+      - name: Forcepush changes
         run: |
-          cd docs/build/html/
-          git init
-          touch .nojekyll
           git add -A
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m 'deploy'
-
-      - name: Force push to dest branch
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: master
-          force: true
-          directory: ./dosc/build/html
+          git commit -m "DeployedPython"
+          git push -u origin master
