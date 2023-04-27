@@ -184,7 +184,7 @@ def load_airports(dir: str = DATASETS_FOLDER) -> pd.DataFrame:
     :param dir: target data directory
     :returns: DataFrame with loaded data
     """
-    return load_csv("airports.csv")
+    return load_csv("airports.csv", dir)
 
 
 def load_carriers(dir: str = DATASETS_FOLDER) -> pd.DataFrame:
@@ -194,7 +194,7 @@ def load_carriers(dir: str = DATASETS_FOLDER) -> pd.DataFrame:
     :param dir: target data directory
     :returns: DataFrame with loaded data
     """
-    return load_csv("carriers.csv")
+    return load_csv("carriers.csv", dir)
 
 
 def load_plane_data(dir: str = DATASETS_FOLDER) -> pd.DataFrame:
@@ -204,7 +204,7 @@ def load_plane_data(dir: str = DATASETS_FOLDER) -> pd.DataFrame:
     :param dir: target data directory
     :returns: DataFrame with loaded data
     """
-    return load_csv("plane-data.csv")
+    return load_csv("plane-data.csv", dir)
 
 
 if __name__ == "__main__":
