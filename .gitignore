@@ -1,6 +1,9 @@
 # macos
 .DS_Store
 
+# sphinx autodoc
+/docs/source/^(?!.*(index)).rst$
+
 # testing env
 bin*
 
