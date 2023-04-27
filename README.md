@@ -7,5 +7,9 @@ Implementation of project performed in groups of 3. No strict tasks - the more s
 
 Used technologies:
 <ul>
-  <li>Python including libraries: numpy, pandas, seaborn, sklearn</li>
+  <li>Python including libraries: selenium, pandas</li>
+  <li>Sphinx for auto-documentation of python's code, according to <a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">docstring markup</a></li>
+  <li>Basic CI/CD pipelines for keeping python's code clean with black and auto-deployment of Sphinx</li>
 </ul>
+
+
