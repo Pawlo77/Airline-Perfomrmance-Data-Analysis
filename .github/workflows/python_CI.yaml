@@ -49,7 +49,7 @@ jobs:
           git add -A
           git config --local user.email " ${{ github.actor }}@github.com"
           git config --local user.name ${{ github.actor }}
-          git commit -m "DeployedPython (${{ github.actor } -  ${{ github.event.pull_request.title }})"
+          git commit -m "DeployedPython (${{ github.actor }} -  ${{ github.event.pull_request.title }})"
           git push -u origin master
 
       - name: Run ghp-import
