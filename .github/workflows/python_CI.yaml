@@ -38,10 +38,7 @@ jobs:
       - name: Prepare and Install dependencies
         run: |
           pip install -r requirements.txt
-<<<<<<< HEAD:.github/workflows/python_CI.yaml
-=======
           pip install sphinx sphinx-rtd-theme ghp-import
->>>>>>> master:.github/workflows/code_documentation.yaml
 
       - name: Make the Sphinx docs
         run: |
@@ -49,7 +46,6 @@ jobs:
           make -C docs clean
           make -C docs html
 
-<<<<<<< HEAD:.github/workflows/python_CI.yaml
       - name: Forcepush changes
         run: |
           git add -A
@@ -57,8 +53,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -m "DeployedPython"
           git push -u origin master
-=======
+
       - name: Run ghp-import
         run: |
           ghp-import -n -p -f docs/build/html
->>>>>>> master:.github/workflows/code_documentation.yaml
