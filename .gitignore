@@ -2,8 +2,8 @@
 .DS_Store
 
 # sphinx autodoc
-*.rst
-!index.rst
+# *.rst
+# !index.rst
 
 # testing env
 bin*
@@ -24,7 +24,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+# build/
 develop-eggs/
 dist/
 downloads/

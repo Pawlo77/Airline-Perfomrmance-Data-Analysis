@@ -39,6 +39,7 @@ jobs:
 
       - name: Make the Sphinx docs
         run: |
+          find . -type f -name "*.rst" ! -name "index.rst" -exec rm {} +
           sphinx-apidoc -o docs/source src 
           make -C docs clean
           make -C docs html
@@ -46,10 +47,10 @@ jobs:
       - name: Forcepush changes
         run: |
           git add -A
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "DeployedPython"
-          git push --force -u origin master
+          git config --local user.email " ${{ github.actor }}@github.com"
+          git config --local user.name ${{ github.actor }}
+          git commit -m "DeployedPython (${{ github.actor })"
+          git push -u origin master
 
       - name: Run ghp-import
         run: |
