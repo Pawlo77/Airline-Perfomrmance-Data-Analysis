@@ -49,7 +49,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "DeployedPython"
-          git push -u origin master
+          git push --force -u origin master
 
       - name: Run ghp-import
         run: |
