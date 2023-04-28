@@ -4,6 +4,7 @@ import time
 import pandas as pd
 
 from zipfile import ZipFile
+import bz2
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -72,7 +73,7 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
     - dir contains only a zip archive, so it extracts it on its own,
     - dir contains both a zip archive and its extracted data, it does nothing.
 
-    ..warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.
+    .. warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.
 
     :param dir: target data directory
     """
@@ -132,6 +133,17 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
         with ZipFile(zip_file, "r") as f:
             f.extractall(dir)
 
+    # decompress the bz2 archives if they aren't already decompressed
+    for filename in sorted(os.listdir(dir)):
+        if filename.endswith(".bz2"):
+            filepath = os.path.join(dir, filename)
+            newfilepath = os.path.splitext(filepath)[0]
+            if not os.path.exists(newfilepath):
+                # if newfilepath not in os.listdir(dir):
+                print(newfilepath)
+                with open(newfilepath, "wb") as f:
+                    f.write(bz2.BZ2File(filepath, "rb").read())
+
 
 def load_flights(years: str | list = "all", dir: str = DATASETS_FOLDER) -> pd.DataFrame:
     """
@@ -148,23 +160,19 @@ def load_flights(years: str | list = "all", dir: str = DATASETS_FOLDER) -> pd.Da
         files = [
             os.path.join(dir, file)
             for file in sorted(os.listdir(dir))
-            if file.endswith(".csv.bz2")
+            if file.endswith(".csv") and file.split(".")[0].isnumeric()
+            # if file.endswith(".csv.bz2") and file.split(".")[0].isnumeric()
         ]
     else:
         files = [
             os.path.join(dir, file)
             for file in sorted(os.listdir(dir))
-            if file.split(".")[0] in years and file.endswith(".csv.bz2")
+            if file.split(".")[0] in years and file.endswith(".csv")
+            # if file.split(".")[0] in years and file.endswith(".csv.bz2")
         ]
 
-    # flights = None
-    # for file in files:
-    #     flight = pd.read_csv(file, compression="bz2")
-    #     if flights is None:
-    #         flights = flight
-    #     else:
-    #         flights = pd.concat([flights, flight], ignore_index=True)
-    flights = [pd.read_csv(file, compression="bz2") for file in files]
+    flights = [pd.read_csv(file) for file in files]
+    # flights = [pd.read_csv(file, compression="bz2") for file in files]
     return pd.concat(flights, ignore_index=True)
 
 
