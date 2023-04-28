@@ -139,8 +139,6 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
             filepath = os.path.join(dir, filename)
             newfilepath = os.path.splitext(filepath)[0]
             if not os.path.exists(newfilepath):
-                # if newfilepath not in os.listdir(dir):
-                print(newfilepath)
                 with open(newfilepath, "wb") as f:
                     f.write(bz2.BZ2File(filepath, "rb").read())
 
@@ -171,7 +169,7 @@ def load_flights(years: str | list = "all", dir: str = DATASETS_FOLDER) -> pd.Da
             # if file.split(".")[0] in years and file.endswith(".csv.bz2")
         ]
 
-    flights = [pd.read_csv(file) for file in files]
+    flights = [pd.read_csv(file, encoding="ISO-8859-1") for file in files]
     # flights = [pd.read_csv(file, compression="bz2") for file in files]
     return pd.concat(flights, ignore_index=True)
 

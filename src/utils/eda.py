@@ -5,11 +5,10 @@ import seaborn as sns
 import numpy as np
 
 PLOTS_DIR = "plots"
+DEFAULT_DIR = "eda_Pawel"
 
 
-def save_fig(
-    name: str, dir: str = os.path.join(PLOTS_DIR, "eda_Pawel"), **kwargs
-) -> None:
+def save_fig(name: str, dir: str = None, **kwargs) -> None:
     """
     Utility function to save matplotlib.pyplot plots to dir in .png format
 
@@ -17,6 +16,8 @@ def save_fig(
     :param dir: target directory
     :param kwargs: arguments that will be passed to matplotlib.pyplot.savefig()
     """
+    if dir is None:
+        dir = os.path.join(PLOTS_DIR, DEFAULT_DIR)
     os.makedirs(dir, exist_ok=True)
     plt.savefig(os.path.join(dir, name + ".png"), **kwargs)
 
@@ -29,6 +30,8 @@ def finish(
     yaxis_size: int = 13,
     xticks_size: int = 9,
     yticks_size: int = 9,
+    plot: bool = True,
+    dir: str = None,
 ) -> None:
     """
     Pretty finishes matplotlib plot, saves it and opens the plot.
@@ -39,6 +42,8 @@ def finish(
     :param yaxis_size: Y axis font size
     :param xticks_size: X ticks labels font size
     :param yticks_size: Y ticks labels font size
+    :param plot: weather to call plt.show()
+    :param dir: directory to save the plot to
     """
     sns.despine()
     ax.xaxis.label.set_size(xaxis_size)
@@ -47,7 +52,11 @@ def finish(
     ax.set_xticklabels(ax.get_xticklabels(), size=yticks_size)
     plt.title(title, size=title_size)
     if ax.get_legend() is not None:
-        save_fig(title, bbox_extra_artists=(ax.get_legend(),), bbox_inches="tight")
+        # keep legend in plot
+        save_fig(
+            title, dir=dir, bbox_extra_artists=(ax.get_legend(),), bbox_inches="tight"
+        )
     else:
-        save_fig(title)
-    plt.show()
+        save_fig(title, dir=dir)
+    if plot:
+        plt.show()
