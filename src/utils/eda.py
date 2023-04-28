@@ -46,5 +46,8 @@ def finish(
     ax.set_yticklabels(ax.get_yticks().astype(np.int64), size=xticks_size)
     ax.set_xticklabels(ax.get_xticklabels(), size=yticks_size)
     plt.title(title, size=title_size)
-    save_fig(title)
+    if ax.get_legend() is not None:
+        save_fig(title, bbox_extra_artists=(ax.get_legend(),), bbox_inches="tight")
+    else:
+        save_fig(title)
     plt.show()
