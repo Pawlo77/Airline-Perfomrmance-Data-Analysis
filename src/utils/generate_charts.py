@@ -30,6 +30,23 @@ MONTHS = np.array(
         "December",
     ]
 )
+REQUIRE = [
+    "UniqueCarrier",
+    "CRSElapsedTime",
+    "DepDelay",
+    "ArrDelay",
+    "TailNum",
+    "Cancelled",
+    "CancellationCode",
+    "Year",
+    "Month",
+    "DayofMonth",
+    "DayOfWeek",
+    "Origin",
+    "Dest",
+    "DepTime",
+    "ArrTime",
+]
 
 
 def generate_charts(years: str | list, dir: str = None):
@@ -44,7 +61,7 @@ def generate_charts(years: str | list, dir: str = None):
         dir = os.path.join("plots", "_".join(years))
     os.makedirs(dir, exist_ok=True)
 
-    flights = load_flights(years)
+    flights = load_flights(years, cols=REQUIRE)
 
     to_iter = list(globals().keys())
     for item in to_iter:
@@ -297,7 +314,7 @@ def chart_6(flights: pd.DataFrame, dir: str):
     ax.xaxis.label.set_size(20)
     ax.yaxis.label.set_size(20)
     plt.title(title, size=30)
-    save_fig(title, dir, dpi=w * 75)
+    save_fig(title, dir, dpi=w * 25)
 
 
 def chart_7(flights: pd.DataFrame, dir: str):
@@ -305,7 +322,7 @@ def chart_7(flights: pd.DataFrame, dir: str):
     title = "Most popular routes"
 
     dt = (
-        flights.groupby(["Origin", "Dest", "Cancelled"])["FlightNum"]
+        flights.groupby(["Origin", "Dest", "Cancelled"])["TailNum"]
         .count()
         .reset_index()
     )
@@ -315,7 +332,7 @@ def chart_7(flights: pd.DataFrame, dir: str):
     dt2 = dt[dt["Origin"] > dt["Dest"]]
     # assert len(dt1) + len(dt2) == len(dt)
     dt2 = dt2.rename(
-        columns={"Origin": "Dest", "Dest": "Origin", "FlightNum": "Number of flights"}
+        columns={"Origin": "Dest", "Dest": "Origin", "TailNum": "Number of flights"}
     )
     dt = pd.concat([dt1, dt2])
     dt["Route"] = dt["Origin"] + " - " + dt["Dest"]
@@ -474,7 +491,8 @@ def chart_9(flights: pd.DataFrame, dir: str):
             (dt[dt >= "2400"].astype(np.int16) - 2400).astype(str).str.zfill(4)
         )
 
-        dt = pd.to_datetime(dt, format="%H%M").dt.strftime("%H")
+        # dt = pd.to_datetime(dt, format="%H%M").dt.strftime("%H")
+        dt = dt.str[:2]
         dt = dt.reset_index().groupby(name)["index"].count().sort_values().reset_index()
         dt["index"] /= 1000
         dt = dt.rename(columns={name: "Hour", "index": name})
