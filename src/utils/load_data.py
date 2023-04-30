@@ -72,7 +72,7 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
     - dir contains only a zip archive, so it extracts it on its own,
     - dir contains both a zip archive and its extracted data, it does nothing.
 
-    ..warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.
+    .. warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.
 
     :param dir: target data directory
     """
@@ -132,12 +132,28 @@ def prepare_data(dir: str = DATASETS_FOLDER) -> None:
         with ZipFile(zip_file, "r") as f:
             f.extractall(dir)
 
+    # decompress the bz2 archives if they aren't already decompressed
+    # remove them to save storage
+    for filename in sorted(os.listdir(dir)):
+        if filename.endswith(".bz2"):
+            filepath = os.path.join(dir, filename)
+            newfilepath = os.path.splitext(filepath)[0]
+            newfilepath = os.path.splitext(newfilepath)[0] + ".pkl"
+            if not os.path.exists(newfilepath):
+                df = pd.read_csv(filepath, compression="bz2", encoding="ISO-8859-1")
+                # df.to_pickle(newfilepath, compression="bz2")
+                df.to_pickle(newfilepath)
+                os.remove(filepath)
 
-def load_flights(years: str | list = "all", dir: str = DATASETS_FOLDER) -> pd.DataFrame:
+
+def load_flights(
+    years: str | list = "all", cols: list = None, dir: str = DATASETS_FOLDER
+) -> pd.DataFrame:
     """
     Loads flight data into memory
 
     :param years: "all" or all possible data, List of str from {"1987", ..., "2008"} for specific ones
+    :param cols: desired columns to be loaded, if None entire data is loaded
     :param dir: target data directory
     :returns: DataFrame with loaded data
     """
@@ -148,23 +164,20 @@ def load_flights(years: str | list = "all", dir: str = DATASETS_FOLDER) -> pd.Da
         files = [
             os.path.join(dir, file)
             for file in sorted(os.listdir(dir))
-            if file.endswith(".csv.bz2")
+            if file.endswith(".pkl") and file.split(".")[0].isnumeric()
         ]
     else:
         files = [
             os.path.join(dir, file)
             for file in sorted(os.listdir(dir))
-            if file.split(".")[0] in years and file.endswith(".csv.bz2")
+            if file.split(".")[0] in years and file.endswith(".pkl")
         ]
 
-    # flights = None
-    # for file in files:
-    #     flight = pd.read_csv(file, compression="bz2")
-    #     if flights is None:
-    #         flights = flight
-    #     else:
-    #         flights = pd.concat([flights, flight], ignore_index=True)
-    flights = [pd.read_csv(file, compression="bz2") for file in files]
+    if cols is None:
+        flights = [pd.read_pickle(file) for file in files]
+    else:
+        flights = [pd.read_pickle(file).loc[:, cols] for file in files]
+
     return pd.concat(flights, ignore_index=True)
 
 
