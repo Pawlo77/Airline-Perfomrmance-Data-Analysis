@@ -44,6 +44,25 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.eda">utils.eda module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.eda.finish"><code class="docutils literal notranslate"><span class="pre">finish()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.eda.save_fig"><code class="docutils literal notranslate"><span class="pre">save_fig()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.generate_charts">utils.generate_charts module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_1"><code class="docutils literal notranslate"><span class="pre">chart_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_2"><code class="docutils literal notranslate"><span class="pre">chart_2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_3"><code class="docutils literal notranslate"><span class="pre">chart_3()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_4"><code class="docutils literal notranslate"><span class="pre">chart_4()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_5"><code class="docutils literal notranslate"><span class="pre">chart_5()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_6"><code class="docutils literal notranslate"><span class="pre">chart_6()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_7"><code class="docutils literal notranslate"><span class="pre">chart_7()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_8"><code class="docutils literal notranslate"><span class="pre">chart_8()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_8_1"><code class="docutils literal notranslate"><span class="pre">chart_8_1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.chart_9"><code class="docutils literal notranslate"><span class="pre">chart_9()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.generate_charts.generate_charts"><code class="docutils literal notranslate"><span class="pre">generate_charts()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-utils.load_data">utils.load_data module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#utils.load_data.CustomTimeoutException"><code class="docutils literal notranslate"><span class="pre">CustomTimeoutException</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#utils.load_data.downloaded"><code class="docutils literal notranslate"><span class="pre">downloaded()</span></code></a></li>
@@ -92,6 +111,117 @@
 <h1>utils package<a class="headerlink" href="#utils-package" title="Permalink to this heading"></a></h1>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-utils.eda">
+<span id="utils-eda-module"></span><h2>utils.eda module<a class="headerlink" href="#module-utils.eda" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.eda.finish">
+<span class="sig-prename descclassname"><span class="pre">utils.eda.</span></span><span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xaxis_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaxis_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">13</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xticks_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yticks_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/utils/eda.html#finish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.eda.finish" title="Permalink to this definition"></a></dt>
+<dd><p>Pretty finishes matplotlib plot, saves it and opens the plot.
+:param ax: The plot object
+:param title: The title to be set (also filename)
+:param title_size: Title font size
+:param xaxis_size: X axis font size
+:param yaxis_size: Y axis font size
+:param xticks_size: X ticks labels font size
+:param yticks_size: Y ticks labels font size
+:param plot: weather to call plt.show()
+:param dir: directory to save the plot to</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.eda.save_fig">
+<span class="sig-prename descclassname"><span class="pre">utils.eda.</span></span><span class="sig-name descname"><span class="pre">save_fig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/utils/eda.html#save_fig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.eda.save_fig" title="Permalink to this definition"></a></dt>
+<dd><p>Utility function to save matplotlib.pyplot plots to dir in .png format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the plot</p></li>
+<li><p><strong>dir</strong> – target directory</p></li>
+<li><p><strong>kwargs</strong> – arguments that will be passed to matplotlib.pyplot.savefig()</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-utils.generate_charts">
+<span id="utils-generate-charts-module"></span><h2>utils.generate_charts module<a class="headerlink" href="#module-utils.generate_charts" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_1">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_1" title="Permalink to this definition"></a></dt>
+<dd><p>“Total Planned Flight Time for each Carrier” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_2">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_2" title="Permalink to this definition"></a></dt>
+<dd><p>“Max Departure and Arrival Delay for each Carrier” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_3">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_3" title="Permalink to this definition"></a></dt>
+<dd><p>“Number of Aircrafts in fleet of each Carrier” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_4">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_4</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_4"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_4" title="Permalink to this definition"></a></dt>
+<dd><p>“Cancelation Rate for each Carrier” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_5">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_5</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_5"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_5" title="Permalink to this definition"></a></dt>
+<dd><p>“Cancelation Causes” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_6">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_6</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_6"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_6" title="Permalink to this definition"></a></dt>
+<dd><p>“Planned Flights over Time” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_7">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_7</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_7"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_7" title="Permalink to this definition"></a></dt>
+<dd><p>“Most popular routes” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_8">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_8</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_8"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_8" title="Permalink to this definition"></a></dt>
+<dd><p>“Total Delay Time for Each Month” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_8_1">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_8_1</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_8_1"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_8_1" title="Permalink to this definition"></a></dt>
+<dd><p>“Delay Coefficient for Each Month” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.chart_9">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">chart_9</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#chart_9"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.chart_9" title="Permalink to this definition"></a></dt>
+<dd><p>“Number of Departures over hours” chart</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.generate_charts.generate_charts">
+<span class="sig-prename descclassname"><span class="pre">utils.generate_charts.</span></span><span class="sig-name descname"><span class="pre">generate_charts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/generate_charts.html#generate_charts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.generate_charts.generate_charts" title="Permalink to this definition"></a></dt>
+<dd><p>Function that wraps all eda_Pawel code and generates its charts
+for given year. Charts are saved to dir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>years</strong> – choice of years that will be passed to utils.load_flights()</p></li>
+<li><p><strong>dir</strong> – directory to save charts. If None, the chart will be saved to “plots/{{year}}”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-utils.load_data">
 <span id="utils-load-data-module"></span><h2>utils.load_data module<a class="headerlink" href="#module-utils.load_data" title="Permalink to this heading"></a></h2>
@@ -181,12 +311,13 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="utils.load_data.load_flights">
-<span class="sig-prename descclassname"><span class="pre">utils.load_data.</span></span><span class="sig-name descname"><span class="pre">load_flights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/home/runner/work/Airline-Performance-Data-Analysis/Airline-Performance-Data-Analysis/src/datasets'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/utils/load_data.html#load_flights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.load_data.load_flights" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">utils.load_data.</span></span><span class="sig-name descname"><span class="pre">load_flights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/home/runner/work/Airline-Performance-Data-Analysis/Airline-Performance-Data-Analysis/src/datasets'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/utils/load_data.html#load_flights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.load_data.load_flights" title="Permalink to this definition"></a></dt>
 <dd><p>Loads flight data into memory</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>years</strong> – “all” or all possible data, List of str from {“1987”, …, “2008”} for specific ones</p></li>
+<li><p><strong>cols</strong> – desired columns to be loaded, if None entire data is loaded</p></li>
 <li><p><strong>dir</strong> – target data directory</p></li>
 </ul>
 </dd>
@@ -217,7 +348,10 @@
 - dir is empty, so it downloads and extracts data on its own,
 - dir contains only a zip archive, so it extracts it on its own,
 - dir contains both a zip archive and its extracted data, it does nothing.</p>
-<p>..warning:: This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function strongly relies on the URL structure. Any errors are most likely caused by its chenges.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>dir</strong> – target data directory</p>
