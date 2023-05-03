@@ -19,5 +19,6 @@ Ideas 💡
     <li>What are the best and worst times to fly to minimize delays?</li>
     <li>How does weather affect flight delays and cancellations?</li>
     <li>How does flight distance affect flight delays and cancellations?</li>
+    <li>Which state are associated with the biggest/ most often delays?</li>
     
 </ul>
