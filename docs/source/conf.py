@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.abspath(os.path.join("..", "..", "src")))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "Airline Perfomrmance Data Analysis"
+project = "Airline Performance Data Analysis"
 copyright = "2023, Paweł Pozorski, Igor Kołodziej, Nazarii Bihniak"
 author = "Paweł Pozorski, Igor Kołodziej, Nazarii Bihniak"
 
