@@ -29,9 +29,9 @@ def generate_charts(years: str | list = "all", dir: str = None):
     """
     if dir is None:
         if isinstance(years, str):
-            dir = os.path.join(PLOTS_DIR, "plots", years)
+            dir = os.path.join(PLOTS_DIR, years)
         else:
-            dir = os.path.join(PLOTS_DIR, "plots", "_".join(years))
+            dir = os.path.join(PLOTS_DIR, "_".join(years))
     os.makedirs(dir, exist_ok=True)
 
     flights = load_flights(years, cols=REQUIRE)
@@ -587,7 +587,7 @@ def chart_11(flights: pd.DataFrame, dir: str):
 
     world = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
     usa = world[world["name"] == "United States of America"]
-    usa.plot(ax=ax, color="white", edgecolor="black")
+    usa.plot(ax=ax, color="white", edgecolor="black", alpha=0.5)
 
     points = gpd.GeoDataFrame(dt, geometry=gpd.points_from_xy(dt["long"], dt["lat"]))
 
@@ -615,7 +615,28 @@ def chart_11(flights: pd.DataFrame, dir: str):
 
     i = 0
     for x, y, label in zip(points["long"], points["lat"], points["city"]):
-        ax.annotate(label, xy=(x, y), xytext=(4, 4), textcoords="offset points")
+        if label == "Newark":  # it overlaps with more important NewYork
+            ax.annotate(
+                label,
+                xy=(x, y),
+                xytext=(0, 70),
+                textcoords="offset points",
+                arrowprops=dict(
+                    facecolor="black",
+                    shrink=0.05,
+                    width=1,
+                    headwidth=4,
+                    edgecolor="black",
+                ),
+            )
+        else:
+            ax.annotate(
+                label,
+                xy=(x, y),
+                xytext=(4, -4),
+                textcoords="offset points",
+            )
+
         i += 1
         if i == 20:
             break
