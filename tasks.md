@@ -6,10 +6,19 @@ Done 🎉
     <li>Basic eda</li>
 </ul>
 <br>
-Doning 🥸
+Doing 🥸
 <ul>
 </ul>
 <br>
 Ideas 💡
 <ul>
+     <li>What plane model most delays are associated with?</li>
+    <li>What are the trends and patterns of flight delays and cancellations over time and across different carriers, airports, and routes?</li>
+    <li>How does airline schedule padding affect consumer choice behavior?</li>
+    <li>What are the best and worst times to fly to minimize delays?</li>
+    <li>What are the best and worst times to fly to minimize delays?</li>
+    <li>How does weather affect flight delays and cancellations?</li>
+    <li>How does flight distance affect flight delays and cancellations?</li>
+    <li>Which state are associated with the biggest/ most often delays?</li>
+    
 </ul>
