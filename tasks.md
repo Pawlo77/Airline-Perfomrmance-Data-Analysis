@@ -16,6 +16,7 @@ Done 🎉
             <li>Number of flights over hours</li>
             <li>Flights Count for each Carrier chart</li>
             <li>10 most popular Airports</li>
+            <li>10 most popular aircrafts models</li>
         </ul>
     </li>
 </ul>
