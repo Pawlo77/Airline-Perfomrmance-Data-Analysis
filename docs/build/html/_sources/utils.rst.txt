@@ -1,32 +1,14 @@
 utils package
 =============
 
-Submodules
-----------
+Subpackages
+-----------
 
-utils.eda module
-----------------
+.. toctree::
+   :maxdepth: 4
 
-.. automodule:: utils.eda
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-utils.generate\_charts module
------------------------------
-
-.. automodule:: utils.generate_charts
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-utils.load\_data module
------------------------
-
-.. automodule:: utils.load_data
-   :members:
-   :undoc-members:
-   :show-inheritance:
+   utils.charts
+   utils.data_preparation
 
 Module contents
 ---------------

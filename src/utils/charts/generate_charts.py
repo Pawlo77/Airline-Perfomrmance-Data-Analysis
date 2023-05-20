@@ -526,7 +526,7 @@ def chart_10(flights: pd.DataFrame, dir: str):
 
 
 def chart_11(flights: pd.DataFrame, dir: str):
-    """ "20 most popular Airports" and ""Airports and their popularity" charts"""
+    """ "10 most popular Airports" and ""Airports and their popularity" charts"""
     title = "10 most popular Airports"
 
     dt1 = flights["Dest"].value_counts()

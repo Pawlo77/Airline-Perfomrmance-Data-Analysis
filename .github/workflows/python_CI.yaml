@@ -1,5 +1,5 @@
 name: Python CI
-run-name: Performing steps for deploying python code for ${{ github.actor }}
+run-name: Deploying code
 
 on:
   push:
@@ -47,9 +47,8 @@ jobs:
       - name: Forcepush changes
         run: |
           git add -A
-          # git config --local user.email " ${{ github.actor }}@github.com"
-          # git config --local user.name ${{ github.actor }}
-          # git commit -m "DeployedPython (${{ github.actor } -  ${{ github.event.pull_request.title }})"
+          git config --local user.name ${{ github.actor }}
+          git config --local user.email "${{ github.actor }}@github.com"
           git commit -m "${{ github.event.head_commit.message }}"
           git push -u origin master
 
