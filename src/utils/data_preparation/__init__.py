@@ -3,7 +3,7 @@ from .load_data import (
     load_flights,
     load_airports,
     load_carriers,
-    load_plane_data,
+    load_plane_data
 )
 from .optimize import optimize, concatenate
 
@@ -14,3 +14,6 @@ load_carriers = load_carriers
 load_plane_data = load_plane_data
 optimize = optimize
 concatenate = concatenate
+
+from .load_airports_additional import load_airports_details
+load_airports_additional = load_airports_additional
