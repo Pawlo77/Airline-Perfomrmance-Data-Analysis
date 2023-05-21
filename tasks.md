@@ -22,7 +22,7 @@ Done 🎉
             <li>10 most popular aircrafts models</li>
             <li>What plane model most delays are associated with?<li>
             <li>What are the best and worst times to fly to minimize delays?</li>
-             <li>How does flight distance affect flight delays and cancellations? -> heatmapa</li> 
+            <li>How does flight distance affect flight delays and cancellations? -> heatmapa</li> 
         </ul>
     </li>
 </ul>
