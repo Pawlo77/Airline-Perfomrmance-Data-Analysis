@@ -6,10 +6,9 @@ import pandas as pd
 import geopandas as gpd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 from scipy.ndimage.filters import uniform_filter1d
 
-from ..data_preparation.load_data import load_flights, load_airports, load_plane_data
+from ..data_preparation.load_data import load_flights, load_airports
 from .helpers import save_fig, finish
 from .constants import REQUIRE, MONTHS, WEEK_DAYS, PLOTS_DIR
 
@@ -643,50 +642,6 @@ def chart_11(flights: pd.DataFrame, dir: str):
             break
 
     finish(ax, title, plot=False, dir=dir)
-
-
-def chart_12(flights: pd.DataFrame, dir: str):
-    """ "10 most popular aircrafts models" chart"""
-    title = "10 most popular aircrafts models"
-
-    if flights["TailNum"].isna().all():
-        warnings.warn(f"Empty final data set: {inspect.currentframe().f_code.co_name}")
-        return  # all values were nan
-
-    planes = load_plane_data()
-    dt = pd.merge(flights, planes, left_on="TailNum", right_on="tailnum")
-    dt = dt.groupby(["model", "manufacturer"])["TailNum"].count()
-    dt = dt.sort_values(ascending=False)[:10]
-    dt = dt.reset_index()
-    dt["model"] = dt["model"].astype("object")
-    dt["manufacturer"] = dt["manufacturer"].astype("object")
-
-    unique = dt["manufacturer"].unique()
-    order = sorted(unique)
-    colors = [order.index(m) for m in dt["manufacturer"]]
-    pallete = sns.color_palette(n_colors=len(unique))
-    handles = [mpatches.Patch(color=pallete[order.index(c)], label=c) for c in unique]
-    cmap = [pallete[c] for c in colors]
-
-    fig = plt.figure()
-    ax = sns.barplot(dt, x="model", y="TailNum", palette=cmap)
-
-    ax.legend(
-        loc="upper left",
-        bbox_to_anchor=(1, 1),
-        title_fontsize="x-large",
-        title="Manufacturer",
-        handles=handles,
-    )
-    plt.xticks(rotation=45)
-    plt.ylabel("Number of flights")
-    plt.xlabel("Plane model")
-    sns.despine()
-    ax.xaxis.label.set_size(13)
-    ax.yaxis.label.set_size(13)
-    plt.title(title, size=20)
-    # so the legend is put inside the box
-    save_fig(title, dir, bbox_extra_artists=(ax.get_legend(),), bbox_inches="tight")
 
 
 def main():
