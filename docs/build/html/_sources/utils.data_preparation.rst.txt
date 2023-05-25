@@ -20,6 +20,14 @@ utils.data\_preparation.download module
    :undoc-members:
    :show-inheritance:
 
+utils.data\_preparation.load\_airports\_additional module
+---------------------------------------------------------
+
+.. automodule:: utils.data_preparation.load_airports_additional
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 utils.data\_preparation.load\_data module
 -----------------------------------------
 
