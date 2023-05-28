@@ -1,7 +1,7 @@
 import os
 
 from utils import generate_charts
-from utils.charts.constants import PLOTS_DIR, ROOT_DIR
+from utils.charts.constants import PLOTS_DIR
 from utils.charts.generate_charts import main as charts_main
 
 
