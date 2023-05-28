@@ -4,7 +4,7 @@ Done 🎉
     <li>Pipelines checking code formatting of python's files on pull request to master branch.</li>
     <li>Functions responsible for automatically downloading, extracting and loading data into memory.</li>
     <li>Basic eda</li>
-    <li>Charts - anwsers to tthe following:
+    <li>Charts - anwsers to the following:
         <ul>
             <li>Total Planned Flight Time for each Carrier</li>
             <li>Max Departure and Arrival Delay for each Carrier</li>
